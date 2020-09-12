@@ -32,8 +32,9 @@ public class UserController {
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(@RequestParam(value = "name") final String name,
-                       @RequestParam(value = "password") final String password) {
-       return userService.userCreate(name, password);
+                       @RequestParam(value = "password") final String password,
+                         @RequestParam(value = "nickname") final String nickname) {
+       return userService.userCreate(name, password, nickname);
     }
 
     @RequestMapping(value = "/check", method = RequestMethod.GET)

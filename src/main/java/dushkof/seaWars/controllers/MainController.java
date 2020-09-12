@@ -40,6 +40,9 @@ public class MainController {
     @Value("${error.message}")
     private String errorMessage;
 
+    @Value("${error.create.message}")
+    private String errorCreateMessage;
+
     @Resource
     UserRepo userRepo;
 
@@ -90,19 +93,24 @@ public class MainController {
 
         String name = userForm.getName();
         String password = userForm.getPassword();
-
-        User user = new User(name, password);
+        String nickname = userForm.getNickname();
+        String USER_CREATE = userService.userCreate(name, password, nickname);
         try {
-            userRepo.save(user);
-            LOGGER.info("User " + name + " is created");
-            return "redirect:/userList";
+            if (USER_CREATE.equals("OK")) {
+                return "redirect:/lobby/?name=" + name;
+            } if (USER_CREATE.equals("NOK < 4") || USER_CREATE.equals("NOK only num")) {
+                LOGGER.info("User " + name + " not created");
+                model.addAttribute("errorCreateMessage", errorCreateMessage);
+                return "addPerson";
+            } else model.addAttribute("errorMessage", errorMessage);
+                return "addPerson";
+
         } catch (Exception e) {
             LOGGER.info("User " + name + " not created");
             LOGGER.info(e.getMessage());
             model.addAttribute("errorMessage", errorMessage);
             return "addPerson";
         }
-
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
@@ -134,6 +142,8 @@ public class MainController {
         List<Game> games = gameService.foundNewGames();
         model.addAttribute("games", games);
         model.addAttribute("name", name);
+        User user = userRepo.findByName(name);
+        model.addAttribute("user", user);
         model.addAttribute("lobbyLink", "/room/?name=" + name);
         return "lobby";
     }

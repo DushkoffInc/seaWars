@@ -10,9 +10,9 @@
 </head>
 <body>
 <center>
-    <h1>Комната <a th:utext="${user.name}"/></h1>
-    <h1>Room host = <a th:utext="${game.userHost.name}" /></h1>
-    <h1>Room second =  <a th:text="${game.secondUser}? ${game.secondUser.name}: '(waiting)'"/></h1>
+    <h1>Комната <a th:utext="${user.nickname}"/></h1>
+    <h1>Room host = <a th:utext="${game.userHost.nickname}" /></h1>
+    <h1>Room second =  <a th:text="${game.secondUser}? ${game.secondUser.nickname}: '(waiting)'"/></h1>
     <h1>Game id = <a th:utext="${game.id}" /></h1>
 
 

@@ -22,6 +22,9 @@
          Password:
          <input type="text" th:field="*{password}" />     
          <br/>
+         Nickname:
+         <input type="text" th:field="*{nickname}" />
+         <br/>
          <input type="submit" value="Create" />
       </form>
        
@@ -33,6 +36,12 @@
          style="color:red;font-style:italic;">
          ...
       </div>
+
+      <div th:if="${errorCreateMessage}" th:utext="${errorCreateMessage}"
+           style="color:red;font-style:italic;">
+         ...
+      </div>
+
        
    </body>
 </html>

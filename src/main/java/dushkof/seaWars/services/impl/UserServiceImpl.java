@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String userCreate(String name, String password){
+    public String userCreate(String name, String password, String nickname){
         boolean onlyNumbers = name.matches("^[0-9]+$");
         if (onlyNumbers) {
             return "NOK only num";
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
         if (testUsers) {
             return "NOK";
         }
-        User user = new User(name, password);
+        User user = new User(name, password, nickname);
         try {
             userRepo.save(user);
             LOGGER.info("User " + name + " is created");

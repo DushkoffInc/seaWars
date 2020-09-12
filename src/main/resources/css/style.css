@@ -27,3 +27,9 @@ cell {
     width:50px;
 }
 
+mailNewMessage {
+    height: 600px;
+    background: #efefef;
+    position: relative;
+    overflow: hidden;
+}

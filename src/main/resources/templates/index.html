@@ -3,11 +3,34 @@
    <head>
       <meta charset="UTF-8" />
       <title>Welcome</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
       <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+      <center>
+      <img src="https://media.giphy.com/media/8cGKbE8GHgyxVoXTbs/giphy.gif" alt="">
+      </center>
    </head>
    <body>
+   <br>
+   <center>
+      <div class="alert alert-primary" role="alert">
       <h1>Welcome</h1>
       <h2 th:utext="${message}">..!..</h2>
+         <div id="mailNewMessage">
+      <form action="/login">
+      <input type="submit" class="btn btn-danger btn-lg" value="Вход" style="position: absolute; top: 120px; left: 650px;"/>
+      </form>
+      <form action="/addPerson">
+      <input type="submit" class="btn btn-success btn-lg" value="Регистрация"  style="position: absolute; top: 120px; left: 800px;"/>
+      </form>
+         </div>
+         <br>
+         <br>
+         <br>
+      </div>
+      <!--<button type="button" class="btn btn-danger">Вход</button>
+      <button type="button" class="btn btn-success">Регистрация</button>-->
+   </center>
        
       <!--  
        
@@ -17,7 +40,7 @@
           
          -->
           
-      <a th:href="@{/userList}">Person List</a>
+      <!--<a th:href="@{/userList}">Person List</a>-->
        
    </body>
     

@@ -15,7 +15,7 @@
     <div class="alert alert-danger" role="alert">
         <br/>
         <br/>
-    <h1>Выберай комнату <a th:utext="${name}"/></h1>
+    <h1>Выберай комнату <a th:utext="${user.nickname}"/></h1>
         <br/>
         <br/>
     </div>
@@ -30,7 +30,7 @@
         </tr>
         <tr th:each ="game : ${games}">
             <td th:utext="${game.id}">...</td>
-            <td th:utext="${game.userHost.name}">...
+            <td th:utext="${game.userHost.nickname}">...
             </td>
             <td>
                 <form action="/joinRoom">
