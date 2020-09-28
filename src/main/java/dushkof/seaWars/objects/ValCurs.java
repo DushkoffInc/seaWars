@@ -47,4 +47,13 @@ public class ValCurs {
     public void setValute(List<dushkof.seaWars.objects.Valute> Valute) {
         this.Valute = Valute;
     }
+
+    @Override
+    public String toString(){
+        String valCurs =  "Date = " + this.Date + "\n" + "name = " + this.name + "\n Valutes: \n";
+        for (dushkof.seaWars.objects.Valute valute : this.Valute) {
+            valCurs = valCurs + valute.toString();
+        }
+        return valCurs;
+    }
 }

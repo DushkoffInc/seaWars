@@ -88,8 +88,8 @@ public class HelloController {
 
                 Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
                 ValCurs resp = (ValCurs) jaxbUnmarshaller.unmarshal(url);
-                System.out.println(resp);
-                // тут она заканчивается) я заполнил все для основного объекта ValCurs и одно поле для объекта Valute см классы ValCurs и Valute
+                System.out.println(resp.toString());
+                // тут она заканчивается)
 
                 return result;
             }
