@@ -1,7 +1,7 @@
 package dushkof.seaWars.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dushkof.seaWars.objects.CurrencyResponse;
+import dushkof.seaWars.objects.ValCurs;
 import dushkof.seaWars.services.GameService;
 import dushkof.seaWars.services.UserService;
 import org.apache.http.Header;
@@ -24,9 +24,16 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.Resource;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URI;
-import java.util.Map;
+import java.net.URL;
 
 @RestController
 @RequestMapping("hello")
@@ -59,28 +66,6 @@ public class HelloController {
         return gameService.init();
     }
 
-    @GetMapping("/rest")
-    public String rest() {
-        RestTemplate restTemplate = new RestTemplate();
-
-        restTemplate.getMessageConverters().add(new Jaxb2RootElementHttpMessageConverter());
-        final String publicURI = "http://www.cbr.ru/scripts/XML_daily.asp";
-        URI uri = getURI(publicURI);
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/xml");
-        headers.set("Host", "www.cbr.ru");
-//        headers.add("charset", "UTF-8");
-        //            String jsonObj = objectMapper.writeValueAsString(request);
-        try {
-            ResponseEntity<CurrencyResponse> personEntity = restTemplate.getForEntity(publicURI, CurrencyResponse.class);
-            personEntity.getBody();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return "hui";
-    }
 
     @GetMapping("/t")
     public String t(){
@@ -96,14 +81,24 @@ public class HelloController {
             System.out.println(headers);
 
             if (entity != null) {
-                // return it as a String
                 String result = EntityUtils.toString(entity);
+// тут начинается магия XD
+                URL url = new URL(publicURI);
+                JAXBContext jaxbContext = JAXBContext.newInstance(ValCurs.class);
+
+                Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+                ValCurs resp = (ValCurs) jaxbUnmarshaller.unmarshal(url);
+                System.out.println(resp);
+                // тут она заканчивается) я заполнил все для основного объекта ValCurs и одно поле для объекта Valute см классы ValCurs и Valute
+
                 return result;
             }
 
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JAXBException e) {
             e.printStackTrace();
         }
 
