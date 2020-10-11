@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table
+@Table(name = "usr")
 @ToString(of = {"id", "name", "password"})
 @EqualsAndHashCode(of = {"id"})
 public class User {
