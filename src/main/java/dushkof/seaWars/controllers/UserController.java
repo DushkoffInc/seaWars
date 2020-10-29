@@ -30,10 +30,11 @@ public class UserController {
         this.userRepo = userRepo;
     }
 
+    //TODO метод устарел, необходимо передлать, если решим использовать api
     @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(@RequestParam(value = "name") final String name,
                        @RequestParam(value = "password") final String password) {
-        User user = new User(name, password);
+        User user = new User();
         try {
             userRepo.save(user);
             LOGGER.info("User " + name + " is created");

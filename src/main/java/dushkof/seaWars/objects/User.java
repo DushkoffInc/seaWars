@@ -1,33 +1,27 @@
 package dushkof.seaWars.objects;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Set;
 
 
 @Entity
-@Table(name = "usr")
-@ToString(of = {"id", "name", "password"})
-@EqualsAndHashCode(of = {"id"})
-public class User {
-
+@Table(name = "t_user")
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
     private String name;
     private String password;
+    @Transient
+    private String passwordConfirm;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
 
-    protected User() {}
-
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
-
-    public User(String name) {
-        this.name = name;
+    public User() {
     }
 
     public Long getId() {
@@ -42,15 +36,65 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public void setName(String username) {
+        this.name = username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getName();
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
 }
+
+

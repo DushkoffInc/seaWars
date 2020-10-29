@@ -1,5 +1,6 @@
 package dushkof.seaWars.controllers;
 
+import dushkof.seaWars.objects.Role;
 import dushkof.seaWars.services.GameService;
 import dushkof.seaWars.services.UserService;
 import org.slf4j.Logger;
@@ -29,5 +30,12 @@ public class HelloController {
         LOGGER.warn("test warn");
         LOGGER.trace("test trace");
         return userService.sayHi();
+    }
+
+    @GetMapping("/newRole")
+    public String createRole() {
+        Role role = new Role();
+        role.setName("ROLE_USER");
+        return "ok";
     }
 }
